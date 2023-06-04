@@ -1,18 +1,18 @@
-import React from 'react'
+import Styles from "./Profile.module.scss";
 
-function MostOrderedMealCard() {
+function MostOrderedMealCard(props) {
+  const info = props.info;
+  //console.log(info);
   return (
-    <div class="flex w-full">
-      <div class="flex w-1/6 mb-5">
-        <img src={require("../../assets/Image6.png")} alt="dish"/>
+    <div className={Styles.cardContainer}>
+      <div className={Styles.img_Container}>
+        <img src={info.url} alt="dish" />
       </div>
-      <div class="ml-5 flex flex-col w-full">
-        <p class="text-md font-semibold">Spicy seasoned seafood noodles</p>
-        <p class="text-gray-400 text-sm">6 times ordered</p>
-
+      <div className={Styles.meal_details}>
+        <p className={Styles.meal_title}>{info.name}</p>
       </div>
     </div>
-  )
+  );
 }
 
-export default MostOrderedMealCard
+export default MostOrderedMealCard;

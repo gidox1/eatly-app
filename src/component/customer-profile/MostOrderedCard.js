@@ -1,55 +1,44 @@
-import React from 'react'
-import MostOrderedMealCard from './MostOrderedMealCard'
-import { useState,useEffect } from 'react'
-import axios from 'axios'
-function MostOrderedCard() {
+import React, { useState, useEffect } from "react";
+import MostOrderedMealCard from "./MostOrderedMealCard";
+import Styles from "./Profile.module.scss";
+import { baseUrl } from "../../config";
+import { axiosInstance } from "../../api";
 
-  // const[orders,setOrders]=useState()
-  const[isLoading,setIsLoading]=useState(true)
+const MostOrderedCard = () => {
+  const [orders, setOrders] = useState([]);
 
-  useEffect(()=>{
-    
-  },[])
+  useEffect(() => {
+    if (orders.length < 1) {
+      axiosInstance
+        .get(`${baseUrl}/order`)
+        .then((res) => {
+          const response = res.data.data;
+          setOrders(response);
+          // console.log(response)
+        })
+        .catch((e) => {
+          console.log(e, "ERROR");
+        });
+    }
+  }, [orders]);
 
-  const numMeal=5
-  if(numMeal<4){
   return (
-    
-      <div class="most-ordered-container h-full">
-      <p class="text-[#99592A] text-2xl font-semibold">Most Ordered</p>
-      <p class="text-gray-400 text-sm">List of your most ordered dishes</p>
-      <div class="flex flex-col mt-10">  
-        <MostOrderedMealCard/>
-        <MostOrderedMealCard/>
-        <MostOrderedMealCard/>
+    <div>
+      <h1 className={Styles.order_title}>Most Ordered</h1>
+      <p className={Styles.order_subtitle}>List of your most ordered dishes</p>
+      <div className={Styles.order_container}>
+       {orders.length === 0 ? (<h1>No order yet</h1>) : ""}
+       
+        {Array.isArray(orders) &&
+          orders.length > 0 &&
+          orders.map((order, key) =>
+            order.products.map((info) => (
+              <MostOrderedMealCard key={info.id} info={info} />
+            ))
+          )}
       </div>
     </div>
-  )
-    
-  }
-  else{
-    return (
-      
-        <div class="most-ordered-container ">
-          <div class="flex flex-col">
-            <p class="text-[#99592A] text-2xl font-semibold">Most Ordered</p>
-           <p class="text-gray-400 text-sm">List of your most ordered dishes</p>
-          </div>
-        
-        <div class="flex-col mt-10 overflow-y-scroll overflow-hidden h-[40vh]  p-3">
-          <MostOrderedMealCard/>
-          <MostOrderedMealCard/>
-          <MostOrderedMealCard/>
-          <MostOrderedMealCard/>
-          <MostOrderedMealCard/>
-          <MostOrderedMealCard/>
-          <MostOrderedMealCard/>
-        </div>
-      </div>
-    )
-      
-    }
-  
-}
+  );
+};
 
-export default MostOrderedCard
+export default MostOrderedCard;
