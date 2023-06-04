@@ -1,5 +1,7 @@
 # eatly
 
+Live url: https://eatly-app.vercel.app/dashboard
+
 ## How To Run
 - Clone repo
 - Run `npm install`
