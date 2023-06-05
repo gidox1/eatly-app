@@ -8,7 +8,7 @@ import { Link, useHistory, useLocation } from "react-router-dom";
 const Signup = (props) => {
   const navigate = useHistory();
   const { search } = useLocation();
-  // const role = search?.split("?")[1];
+
   const role = new URLSearchParams(search).get("role"); // Retrieve role from URL parameter
   const [formValues, setFormValues] = useState({
     first_name: "",
@@ -204,7 +204,7 @@ const Signup = (props) => {
                           : "300px",
                     }}
                   >
-                    <option value="">select an a role</option>
+                    <option value="">select a role</option>
 
                     <option value="user">Customer</option>
                     <option value="merchant">Merchant</option>
@@ -276,7 +276,7 @@ const Signup = (props) => {
                 </div>
 
                 <div>
-                  <label className="label_field">Phone No.</label>
+                  <label className="label_field">Phone No. (with country code)</label>
                   <input
                     type="number"
                     className="input_field"
